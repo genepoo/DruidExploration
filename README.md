@@ -8,10 +8,10 @@ Documentation of early experiments with Druid, a data store optimized for the st
 ### Install stand-alone
 ### (EASY) Install Imply Analytics Platform:
 
-Follow Avi's installation instructions [here](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
+Follow Avi's installation instructions in the druid-evaluation branch of the [sdp-batch repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
   
 ## Ingesting or Indexing data
-There are likely other ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi uploaded example csv and index-task files [here](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
+There are likely other ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi also uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
 
 
 Druid translates the specs in the index-task file and uses them to parse the data provided in a csv file by:
