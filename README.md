@@ -11,7 +11,7 @@ Documentation of early experiments with Druid, a data store optimized for the st
 Follow Avi's installation instructions in the druid-evaluation branch of the [sdp-batch repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
   
 ## Ingesting or Indexing data
-There are likely other ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi also uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
+There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
 
 
 Druid translates the specs in the index-task file and uses them to parse the data provided in a csv file by:
@@ -29,8 +29,12 @@ For datasets where the number of possible values is low but the total number of 
 
 ## Querying ingested data
 #### The terminology of Druid's data model
-1. There are three types of columns
-  1. Time, which is a special column type that is **rolled up** (when deriving meaningful aggregate measures across the data) or **sharded (segmented)** to look at what happens within specific time intervals. Segmentation from the point of view of a query is different from segmentation that Druid performs internally at the time of ingestion. The latter depends on the floor granularity specified, among other things, whereas the former is specified at query time, depending on the output desired. 
+1. Variables are of three types, stored as columns
+  1. Time, which is a special column type that is **rolled up** (when deriving meaningful aggregate measures across the data) or **sharded (segmented)** to look at what happens within specific time intervals. Segmentation from the point of view of a query is different from segmentation that Druid performs internally at the time of ingestion. The latter depends on the floor granularity specified, among other things, whereas the former is specified at query time, depending on the output desired.
+  2. Dimensional columns - strings, categorical variables etc - things you might want to filter and group on but that are not computed on like numbers. 
+  3. Metric columns - numeric columns that we might want to compute statistics with.
+  
+A more nuanced description of the differences between dimension and metric types is [here.](https://groups.google.com/forum/#!msg/druid-user/Mk6omlC6Vbk/jtIFGFrACwAJ)
 
 
 #### Types of queries: Timeseries, TopN and groupBy
