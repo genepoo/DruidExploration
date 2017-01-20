@@ -16,7 +16,6 @@ Follow Avi's installation instructions in the druid-evaluation branch of the [sd
   1. Time, which is a special column type that is rolled up (when deriving meaningful aggregate measures across the data) or sharded (segmented) to look at what happens within specific time intervals. Segmentation from the point of view of a query is different from segmentation that Druid performs internally at the time of ingestion. The latter depends on the floor granularity specified, among other things, whereas the former is specified at query time, depending on the output desired.
   2. Dimensional columns - strings, categorical variables etc - things you might want to filter and group on but that are not computed on like numbers. 
   3. Metric columns - numeric columns that we might want to compute statistics with.
-  
 A more nuanced description of the differences between dimension and metric types is [here.](https://groups.google.com/forum/#!msg/druid-user/Mk6omlC6Vbk/jtIFGFrACwAJ)
 
 2. Druid operates natively on its variables using **JSON over HTTP**, although the community has contributed query libraries in numerous languages, including SQL.
