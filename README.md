@@ -77,6 +77,6 @@ When specifying ingestion spec, remember that in
 
 List of visualizations from Insights we would like to reproduce:
 
--[x] Average dwell time by day of week (replicate this chart using bay_events)
--[x] Average dwell time by zone (replicate this chart using bay_events)
--[ ] 
+- [ ] Average dwell time by day of week (replicate this chart using bay_events)
+- [ ] Average dwell time by zone (replicate this chart using bay_events)
+- [ ]
