@@ -69,4 +69,12 @@ When specifying ingestion spec, remember that in
         "intervals" : ["2016-11-01/2016-11-30”]
  ```       
 **"type" = "uniform"** means that we want the segments to be sharded uniformly. It doesn't mean that the timestamps on the rows of the input are uniform. i.e. - this specifies **desired spec of the segmented output**, not the input. 
-2. 
+
+
+#### Implementation notes
+
+List of visualizations from Insights we would like to reproduce:
+
+[x] Average dwell time by day of week
+[x] Average dwell time by zone 
+[] 
