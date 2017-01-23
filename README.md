@@ -1,4 +1,4 @@
-# DruidExploration
+# Experiments implementing Druid
 
 Documentation of early experiments with Druid, a data store optimized for the storage of large time-series datasets.
 
@@ -19,10 +19,12 @@ Follow Avi's installation instructions in the druid-evaluation branch of the [sd
 A more nuanced description of the differences between dimension and metric types is [here.](https://groups.google.com/forum/#!msg/druid-user/Mk6omlC6Vbk/jtIFGFrACwAJ)
 
 2. Druid operates natively on its variables using **JSON over HTTP**, although the community has contributed query libraries in numerous languages, including SQL.
+
 3. Two principal actions in Druid, involved both in the process of compression and when carrying out queries are 
 
-  1. **rolling up:** aggregating the data based on your specifications. e.g. the original data may contain rows measured at millisecond precision, but we want averages taken over every half hour, and
-  2. **sharding:** segmenting the data by time intervals. e.g. we have a weeks worth of data but we want to ask questions about a specific day. All queries operate only on sharded/segmented data and therefore are required to specify a time interval upon which they operate, (even if that is "all"?). 
+  1. **Rolling up:** aggregating the data based on your specifications. e.g. the original data may contain rows measured at second precision, but we want averages taken over every half hour, and
+  2. **Sharding:** segmenting the data by time intervals. e.g. we have a weeks worth of data but we want to ask questions about a specific day. All queries operate only on sharded/segmented data and therefore are required to specify a time interval upon which they operate, (even if that is "all"?). 
+  
 4. **Granularity** has to do with the units of time relevant to an operation. It is used in two contexts.
 
  1. Ingestion Granularity: Granularity parameters in the ingestion spec tell Druid how data should segmented+compressed at ingestion. Two things are relavant at the time of ingestion - the floor of the desired granularity, which is the smallest unit of time that one might want to query the data on, and influences how the data are rolled up. This is specified using the **queryGranularity** field in the ingestion granularity spec. The other is **segmentGranularity**, which is the time period covered by each shard or segment during ingestion. 
@@ -75,6 +77,6 @@ When specifying ingestion spec, remember that in
 
 List of visualizations from Insights we would like to reproduce:
 
-[x] Average dwell time by day of week
-[x] Average dwell time by zone 
-[] 
+-[x] Average dwell time by day of week (replicate this chart using bay_events)
+-[x] Average dwell time by zone (replicate this chart using bay_events)
+-[ ] 
