@@ -20,11 +20,15 @@ A more nuanced description of the differences between dimension and metric types
 
 2. Druid operates natively on its variables using **JSON over HTTP**, although the community has contributed query libraries in numerous languages, including SQL.
 3. Two principal actions in Druid, involved both in the process of compression and when carrying out queries are 
+
   1. **rolling up:** aggregating the data based on your specifications. e.g. the original data may contain rows measured at millisecond precision, but we want averages taken over every half hour, and
   2. **sharding:** segmenting the data by time intervals. e.g. we have a weeks worth of data but we want to ask questions about a specific day. All queries operate only on sharded/segmented data and therefore are required to specify a time interval upon which they operate, (even if that is "all"?). 
-4. **Granularity** has to do with the units of time relevant to an operation. It is used in two contexts. 
+4. **Granularity** has to do with the units of time relevant to an operation. It is used in two contexts.
+
  1. Ingestion Granularity: Granularity parameters in the ingestion spec tell Druid how data should segmented+compressed at ingestion. Two things are relavant at the time of ingestion - the floor of the desired granularity, which is the smallest unit of time that one might want to query the data on, and influences how the data are rolled up. This is specified using the **queryGranularity** field in the ingestion granularity spec. The other is **segmentGranularity**, which is the time period covered by each shard or segment during ingestion. 
- 2. Query Granularity: Some queries/operation must specify a granularity across which output is desired. For example, 
+ 2. Query Granularity: Some queries/operation must specify a granularity across which output is desired. We go into examples when we go over queries.
+ 
+5. Queries  
   
 ## Ingesting or Indexing data
 There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
