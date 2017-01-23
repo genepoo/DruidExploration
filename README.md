@@ -27,16 +27,12 @@ A more nuanced description of the differences between dimension and metric types
 There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
 
 
-Druid translates the specs in the index-task file and uses them to parse the data provided in a csv file by:
-1. assigning names and types to the coulmns 
-2. storing each column separately
-3. compressing metric columns using efficient LZ4 compression 
-4. compressing dimensional columns using a combination of:
+Druid translates the specs in the index-task file and uses them to parse the data provided in a csv file by (a) assigning names and types to the coulmns, (b) storing each column separately and (c) compressing each column. Metric columns are compressed using [LZ4 compression](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm)). Dimensional columns are compressed using a combination of:
   1. a dictionary that assigns each unique value in the column a numeric id (e.g. Monday: 1, Tuesday:2, etc)
   2. column data specified using the number from (a) e.g. the column {"Monday", "Monday", "Tuesday"} becomes {1, 1, 2}
   3. a bitmap with as many rows as there are unique values in the column. 
 
-For datasets where the number of possible values is low but the total number of rows is high (e.g. the day of week column in a dataset sampled every minute for a month), the bitmaps will be very sparse and hence easy to compress. 
+For datasets where the number of possible values is low but the total number of rows is high the bitmaps will be very sparse, leading to large space savings with compression.
   
 ### JSON specification of ingestion parameters corresponding to a csv or tsv dataset
 
