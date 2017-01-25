@@ -1,16 +1,6 @@
-# Experiments implementing Druid
+# Druid's data model
 
-Documentation of early experiments with Druid, a data store optimized for the storage of large time-series datasets.
-
-## Why Druid?
-
-## Installing Druid
-### Install stand-alone
-### (EASY) Install Imply Analytics Platform:
-
-Follow Avi's installation instructions in the druid-evaluation branch of the [sdp-batch repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
-
-## The terminology of Druid's data model
+## The terminology of Druid
  
 1. **Variables** are of three types, stored as **columns**
   1. Time, which is a special column type that is rolled up (when deriving meaningful aggregate measures across the data) or sharded (segmented) to look at what happens within specific time intervals. Segmentation from the point of view of a query is different from segmentation that Druid performs internally at the time of ingestion. The latter depends on the floor granularity specified, among other things, whereas the former is specified at query time, depending on the output desired.
@@ -32,7 +22,7 @@ A more nuanced description of the differences between dimension and metric types
  
   
 ## Ingesting or Indexing data
-There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
+There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the druid-evaluation branch of the sdp-batch [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
 
 
 Druid translates the specs in the index-task file and uses them to parse the data provided in a csv file by (a) assigning names and types to the coulmns, (b) storing each column separately and (c) compressing each column. Metric columns are compressed using [LZ4 compression](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm)). Dimensional columns are compressed using a combination of:
@@ -56,8 +46,6 @@ For datasets where the number of possible values is low but the total number of 
 ### Aggregations and postAggregations in Superset
 ### Pivot, meet Plywood.
 ### Pydruid, the Gandalf of them all. 
-
-
 
 
 ### Notes
