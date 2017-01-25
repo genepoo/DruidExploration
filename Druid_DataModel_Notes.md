@@ -56,3 +56,21 @@ For datasets where the number of possible values is low but the total number of 
 ### Aggregations and postAggregations in Superset
 ### Pivot, meet Plywood.
 ### Pydruid, the Gandalf of them all. 
+
+
+
+
+### Notes
+
+When specifying ingestion spec, remember that in 
+```
+      "dataSource" : “trisite_bay_events",
+      "granularitySpec" : {
+        "type" : "uniform",
+        "segmentGranularity" : "day",
+        "queryGranularity" : "minute",
+        "intervals" : ["2016-11-01/2016-11-30”]
+ ```       
+**"type" = "uniform"** means that we want the segments to be sharded uniformly. It doesn't mean that the timestamps on the rows of the input are uniform. i.e. - this specifies **desired spec of the segmented output**, not the input. 
+
+
