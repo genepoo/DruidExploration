@@ -58,7 +58,26 @@ Dimension Spec for day of the week (specified within the JSON of the day_of_week
 * postAggregations in Superset
 * Prototyping the remainder of the dwell time bar charts.
 
+Derived dimensions in Superset can be also specified as "Druid Metrics". Metrics in Supersetese are just numeric columns/metrics but are either aggregations (like sum, max etc.) or postAggregations. We created an "average visit duration" metric defined as below:
+
+```
+{ "type": "arithmetic",
+      "name": "avg_visit_duration",
+      "fn": "/",
+      "fields": [
+        { "type": "fieldAccess", "fieldName": "sum__dwell_mins" },
+        { "type": "fieldAccess", "fieldName": "count" }
+      ]
+    }
+  ```
+  
+ Here, ```sum__dwell_mins``` and ```count``` are aggregations defined on the ingested dataset. 
+
+
+
 #### Jan 25, 2017
 * Prototyping time series charts in Superset
 * Processing raw time series chart data using Druid API
 * Defining a time series query to obtain fractional occupancy by hour of day (this is a work in progress)
+
+Having worked on a few bar charts, we decided to move on to the visualization of time series. For this, we obtained a dataset that reports the bays used ('bays_occupied_qty') and present ('bays_supplied_qty') at every half hour interval, for every zone name and bay type, for the Fort Lauderdale site between Aug 20 and Sept 21, 2016. 
