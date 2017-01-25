@@ -3,9 +3,18 @@
 
 List of visualizations from Insights we would like to reproduce:
 
-- [ ] Average dwell time by day of week (replicate [this](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/dwell?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-summary) chart using bay_events)
-- [ ] Average dwell time by zone (replicate this chart using bay_events)
-- [ ] 
+
+#### Bar Charts
+
+- [x] Average dwell time by day of week (the first of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/dwell?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-summary) charts using bay_events)
+- [x] Average dwell time by zone (the second of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/dwell?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-summary) chart using bay_events)
+- [x] Average dwell time by bay type (the third of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/dwell?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-summary) chart using bay_events)
+
+#### Time series charts
+- [ ] Hourly occupancy across a parking lot for a specified time interval (the first of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy) charts using FLL_Occupancy_Events)
+- [ ] Hourly occupancy for a site by day of week for a specified time interval (the second of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy) charts using FLL_Occupancy_Events)
+- [ ] Hourly occupancy for a site by zone for a specified time interval (the third of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy) charts using FLL_Occupancy_Events)
+- [ ] Hourly occupancy for a site by bay type for a specified time interval (the fourth of [these](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy) charts using FLL_Occupancy_Events)
 
 
 ### Notes
