@@ -30,7 +30,6 @@ A more nuanced description of the differences between dimension and metric types
  1. Ingestion Granularity: Granularity parameters in the ingestion spec tell Druid how data should segmented+compressed at ingestion. Two things are relavant at the time of ingestion - the floor of the desired granularity, which is the smallest unit of time that one might want to query the data on, and influences how the data are rolled up. This is specified using the **queryGranularity** field in the ingestion granularity spec. The other is **segmentGranularity**, which is the time period covered by each shard or segment during ingestion. 
  2. Query Granularity: Some queries/operation must specify a granularity across which output is desired. We go into examples when we go over queries.
  
-5. Queries  
   
 ## Ingesting or Indexing data
 There are several ways to ingest data, but we do it by providing (a) a dataset in csv format and (b) the specifications for how to index and compress these data in an "index-task" JSON file. Avi has uploaded example csv and index-task files in the [repo](https://github.com/parkassist/sdp-batch/tree/druid-evaluation/druid-evaluation/quickstart). 
@@ -47,8 +46,6 @@ For datasets where the number of possible values is low but the total number of 
 
 ## Querying ingested data
 
-
-
 #### Types of queries: Timeseries, TopN and groupBy
 #### Transforming data: Aggregations and postAggregations
 #### Druid API queries
@@ -59,24 +56,3 @@ For datasets where the number of possible values is low but the total number of 
 ### Aggregations and postAggregations in Superset
 ### Pivot, meet Plywood.
 ### Pydruid, the Gandalf of them all. 
-
-### Notes
-When specifying ingestion spec, remember that in 
-```
-      "dataSource" : “trisite_bay_events",
-      "granularitySpec" : {
-        "type" : "uniform",
-        "segmentGranularity" : "day",
-        "queryGranularity" : "minute",
-        "intervals" : ["2016-11-01/2016-11-30”]
- ```       
-**"type" = "uniform"** means that we want the segments to be sharded uniformly. It doesn't mean that the timestamps on the rows of the input are uniform. i.e. - this specifies **desired spec of the segmented output**, not the input. 
-
-
-#### Prototype task-list
-
-List of visualizations from Insights we would like to reproduce:
-
-- [ ] Average dwell time by day of week (replicate this chart using bay_events)
-- [ ] Average dwell time by zone (replicate this chart using bay_events)
-- [ ] 
