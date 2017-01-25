@@ -73,10 +73,10 @@ When specifying ingestion spec, remember that in
 **"type" = "uniform"** means that we want the segments to be sharded uniformly. It doesn't mean that the timestamps on the rows of the input are uniform. i.e. - this specifies **desired spec of the segmented output**, not the input. 
 
 
-#### Implementation notes
+#### Prototype task-list
 
 List of visualizations from Insights we would like to reproduce:
 
 - [ ] Average dwell time by day of week (replicate this chart using bay_events)
 - [ ] Average dwell time by zone (replicate this chart using bay_events)
-- [ ]
+- [ ] 
