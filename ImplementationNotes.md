@@ -1,7 +1,7 @@
 
 ### Prototype task-list
 
-List of visualizations from Insights we would like to reproduce:
+List of visualizations from Insights we would like to reproduce using either Superset or Pivot on top of Druid:
 
 
 #### Bar Charts
