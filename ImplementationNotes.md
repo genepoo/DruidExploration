@@ -73,11 +73,83 @@ Derived dimensions in Superset can be also specified as "Druid Metrics". Metrics
   
  Here, ```sum__dwell_mins``` and ```count``` are aggregations defined on the ingested dataset. 
 
-
-
 #### Jan 25, 2017
 * Prototyping time series charts in Superset
 * Processing raw time series chart data using Druid API
 * Defining a time series query to obtain fractional occupancy by hour of day (this is a work in progress)
 
-Having worked on a few bar charts, we decided to move on to the visualization of time series. For this, we obtained a dataset that reports the bays used ('bays_occupied_qty') and present ('bays_supplied_qty') at every half hour interval, for every zone name and bay type, for the Fort Lauderdale site between Aug 20 and Sept 21, 2016. 
+Having worked on a few bar charts, we decided to move on to the visualization of time series. For this, we obtained a dataset that reports the bays used and present, named ```bays_occupied_qty``` and ```bays_supplied_qty``` respectively, at every half hour interval, for every zone name and bay type, for the Fort Lauderdale site between Aug 20 and Sept 21, 2016. 
+
+For each row (reported every half-hour, for every zone and bay type), the fraction of bays that are occupied is the ratio of bays occupied to the total bays. We cast this ratio, which we called ```fraction_occupied``` as a postAggregation defined on aggregations derived by rolling up ```bays_occupied_qty``` and ```bays_supplied_qty``` across any desired set of groupings:
+
+```
+    { "type": "arithmetic",
+      "name": "fractional_occupancy",
+      "fn": "/",
+      "fields": [
+        { "type": "fieldAccess", "fieldName": "sum__bays_occupied_qty" },
+        { "type": "fieldAccess", "fieldName": "sum__bays_supplied_qty" }
+      ]
+    }
+ ```   
+ 
+Visualizing fraction_occupied over time allowed us to visualize the opccupancy as a function of time between a user specified set of start and end times. 
+ 
+Next, we attempted averaging along the time axis, so as to enable visualizations of the average value of a metric over the hours of a day like [here](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy) or the days of a week like [here] (https://insights.parkassist.com/en/sites/ft-lauderdale/chart_builder?utf8=%E2%9C%93&aggregation=avg&y_axis=dwell&x_axis=day-of-week&chart_type=line&range%5B1%5D%5Bname%5D=Series+1&range%5B1%5D%5Bstart_date%5D=2016-08-20&range%5B1%5D%5Bend_date%5D=2017-09-20&range%5B1%5D%5Bstart_time%5D=00%3A00&range%5B1%5D%5Bend_time%5D=22%3A00&range%5B1%5D%5Bdays_of_week%5D%5B%5D=8&range%5B1%5D%5Bzones%5D%5B%5D=All+zones&commit=Update)
+
+Doing this in Superset was complicated by its lacking features that allow us to define postAggregations that are functions of other postAggregations. This is because postAggregastions in Superset are metrics that do not become columns and which cannot be rolled up. So for example, we could not create the following postAggregation:
+
+```
+{ "type": "arithmetic",
+      "name": "average_occupancy",
+      "fn": "/",
+      "fields": [
+        { "type": "fieldAccess", "fieldName": "sum__fraction_occupied" },
+        { "type": "fieldAccess", "fieldName": "count" }
+      ]
+    }
+ ```
+ 
+ To deal with this, we decided to separate the task of data processing from visualization and attempted to write a Druid timeSeries query that would give us average occupancy (expressed as a fraction or percentage) averaged over the hour of the day. We constructed:
+ 
+ ```
+ {
+  "aggregations": [
+    {
+      "type": "longSum",
+      "name": "sum__bays_occupied_qty",
+      "fieldName": "bays_occupied_qty"
+    },
+    {
+      "type": "longSum",
+      "name": "sum__bays_supplied_qty",
+      "fieldName": "bays_supplied_qty"
+    },
+    {
+      "type": "count",
+      "name": "count"
+    }
+  ],
+  "intervals": "2016-09-04T00:00:00+00:00/2016-09-11T00:00:00+00:00",
+  "dataSource": "FLL_Occupancy_Events",
+  "granularity": {
+    "duration": 1800000,
+    "timezone": "America/New_York",
+    "type": "duration"
+  },
+  "postAggregations": [
+    {
+      "type": "javascript",
+      "name": "average_occupancy",
+      "fieldNames": ["sum__bays_occupied_qty", "sum__bays_supplied_qty"],
+      "function": "function(sum__bays_occupied_qty, sum__bays_supplied_qty, count) { return sum__bays_occupied_qty / sum__bays_supplied_qty; }"
+    }
+  ],
+  "queryType": "timeseries"
+}
+```
+
+This query produced an output that we need to visualize and validate. We also need to figure out why it reports a count of 23. 
+
+ 
+ 
