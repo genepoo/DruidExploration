@@ -20,7 +20,7 @@ Insight's versions of these charts are [here](https://insights.parkassist.com/en
 
 Insight's versions of these charts are [here](https://insights.parkassist.com/en/sites/ft-lauderdale/reports/occupancy?end_date=20160921&end_time=23%3A30&start_date=20160820&start_time=00%3A00#tab-hourly-occupancy).
 
-### Notes
+### Daily notes
 #### Jan 19, 2017
 * Avi reviewed the advantages of Druid's data model over our current implementation. 
 * Avi explained how Druid ingests data and provided us with a simple dataset and ingestion specs
